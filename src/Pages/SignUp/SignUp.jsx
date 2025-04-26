@@ -3,6 +3,8 @@ import { FcGoogle } from 'react-icons/fc'
 import toast from 'react-hot-toast'
 import useAuth from '../../hook/useAuth'
 import { TbFidgetSpinner } from 'react-icons/tb'
+import axios from 'axios'
+import { imageUpload } from '../../api/utils'
 
 const SignUp = () => {
   const { createUser, updateUserProfile, signInWithGoogle,loading} = useAuth()
@@ -15,15 +17,14 @@ const SignUp = () => {
     const name = form.name.value
     const email = form.email.value
     const password = form.password.value
-
-    //1. send image data to imgbb
-
+    const image = form.image.files[0];
+    const photoUrl = await imageUpload(image);
     try {
       //2. User Registration
       const result = await createUser(email, password)
 
       //3. Save username & profile photo
-      await updateUserProfile(name)
+      await updateUserProfile(name, photoUrl)
       console.log(result)
 
       navigate('/')
