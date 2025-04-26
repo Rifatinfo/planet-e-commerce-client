@@ -1,8 +1,46 @@
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { FcGoogle } from 'react-icons/fc'
+import useAuth from '../../hook/useAuth'
+import toast from 'react-hot-toast'
 
 const Login = () => {
+    const { signIn, signInWithGoogle, loading, user } = useAuth()
+  const navigate = useNavigate()
+  const location = useLocation()
+  const from = location?.state?.from?.pathname || '/'
+  if (user) return <Navigate to={from} replace={true} />
+  if (loading) return <p>Loading....</p>
+ // form submit handler
+ const handleSubmit = async event => {
+    event.preventDefault()
+    const form = event.target
+    const email = form.email.value
+    const password = form.password.value
 
+    try {
+      //User Login
+      await signIn(email, password)
+
+      navigate(from, { replace: true })
+      toast.success('Login Successful')
+    } catch (err) {
+      console.log(err)
+      toast.error(err?.message)
+    }
+  }
+
+  // Handle Google Signin
+  const handleGoogleSignIn = async () => {
+    try {
+      //User Registration using google
+      await signInWithGoogle()
+      navigate(from, { replace: true })
+      toast.success('Login Successful')
+    } catch (err) {
+      console.log(err)
+      toast.error(err?.message)
+    }
+  }
   return (
     <div className='flex justify-center items-center min-h-screen bg-white'>
       <div className='flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900'>
@@ -13,7 +51,7 @@ const Login = () => {
           </p>
         </div>
         <form
-         
+         onSubmit={handleSubmit}
           noValidate=''
           action=''
           className='space-y-6 ng-untouched ng-pristine ng-valid'
@@ -77,7 +115,8 @@ const Login = () => {
           <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
         </div>
         <div
-          className='flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer'
+          onClick={handleGoogleSignIn}
+          className=' flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer'
         >
           <FcGoogle size={32} />
 

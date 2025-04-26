@@ -1,7 +1,52 @@
-import { Link} from 'react-router-dom'
+import { Link, useNavigate} from 'react-router-dom'
 import { FcGoogle } from 'react-icons/fc'
-const SignUp = () => {
+import toast from 'react-hot-toast'
+import useAuth from '../../hook/useAuth'
+import { TbFidgetSpinner } from 'react-icons/tb'
 
+const SignUp = () => {
+  const { createUser, updateUserProfile, signInWithGoogle,loading} = useAuth()
+  const navigate = useNavigate()
+
+ // form submit handler
+ const handleSubmit = async event => {
+    event.preventDefault()
+    const form = event.target
+    const name = form.name.value
+    const email = form.email.value
+    const password = form.password.value
+
+    //1. send image data to imgbb
+
+    try {
+      //2. User Registration
+      const result = await createUser(email, password)
+
+      //3. Save username & profile photo
+      await updateUserProfile(name)
+      console.log(result)
+
+      navigate('/')
+      toast.success('Signup Successful')
+    } catch (err) {
+      console.log(err)
+      toast.error(err?.message)
+    }
+  }
+
+ // Handle Google Signin
+ const handleGoogleSignIn = async () => {
+    try {
+      //User Registration using google
+      await signInWithGoogle()
+
+      navigate('/')
+      toast.success('Signup Successful')
+    } catch (err) {
+      console.log(err)
+      toast.error(err?.message)
+    }
+  }
   return (
     <div className='flex justify-center items-center min-h-screen bg-white'>
       <div className='flex flex-col max-w-md p-6 rounded-md sm:p-10 bg-gray-100 text-gray-900'>
@@ -10,7 +55,7 @@ const SignUp = () => {
           <p className='text-sm text-gray-400'>Welcome to PlantNet</p>
         </div>
         <form
-         
+         onSubmit={handleSubmit}
           noValidate=''
           action=''
           className='space-y-6 ng-untouched ng-pristine ng-valid'
@@ -74,7 +119,7 @@ const SignUp = () => {
           </div>
 
           <div>
-            {/* <button
+            <button
               type='submit'
               className='bg-lime-500 w-full rounded-md py-3 text-white'
             >
@@ -83,7 +128,7 @@ const SignUp = () => {
               ) : (
                 'Continue'
               )}
-            </button> */}
+            </button>
           </div>
         </form>
         <div className='flex items-center pt-4 space-x-1'>
@@ -94,6 +139,7 @@ const SignUp = () => {
           <div className='flex-1 h-px sm:w-16 dark:bg-gray-700'></div>
         </div>
         <div
+          onClick={handleGoogleSignIn}
           className='flex justify-center items-center space-x-2 border m-3 p-2 border-gray-300 border-rounded cursor-pointer'
         >
           <FcGoogle size={32} />

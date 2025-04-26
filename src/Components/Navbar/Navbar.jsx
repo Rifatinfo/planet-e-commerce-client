@@ -3,8 +3,10 @@ import { useContext, useState } from "react";
 import { BiX } from "react-icons/bi";
 import { IoMenu } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import useAuth from "../../hook/useAuth";
 const Navbar = () => {
-    // const {user} = useAuth()
+    const { user, logOut } = useAuth()
+
     const [open, setOpen] = useState(false);
     const menuItems = [
         { name: "", link: "/" },
@@ -43,15 +45,46 @@ const Navbar = () => {
                             <div className="w-10 rounded-full">
                                 <img
                                     alt="Tailwind CSS Navbar component"
-                                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                                    src={user && user.photoURL ? user.photoURL : "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"}
+                                />
                             </div>
                         </div>
                         <ul
                             tabIndex={0}
                             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                            <Link to="/sign-up"><li><a>Sign Up</a></li></Link>
-                            <Link to="/sign-in"><li><a>Sign In</a></li></Link>
+                            {user ? (
+                                <>
+                                    <Link
+                                        to='/dashboard'
+                                        className='px-4 py-3 hover:bg-neutral-100 transition font-semibold'
+                                    >
+                                        Dashboard
+                                    </Link>
+                                    <div
+                                        onClick={logOut}
+                                        className='px-4 py-3 hover:bg-neutral-100 transition font-semibold cursor-pointer'
+                                    >
+                                        Logout
+                                    </div>
+                                </>
+                            ) : (
+                                <>
+                                    <Link
+                                        to='/sign-in'
+                                        className='px-4 py-3 hover:bg-neutral-100 transition font-semibold'
+                                    >
+                                        Login
+                                    </Link>
+                                    <Link
+                                        to='/sign-up'
+                                        className='px-4 py-3 hover:bg-neutral-100 transition font-semibold'
+                                    >
+                                        Sign Up
+                                    </Link>
+                                </>
+                            )}
                         </ul>
+                      
                     </div>
 
                     {/* mobile Menu Toggle Button  */}
