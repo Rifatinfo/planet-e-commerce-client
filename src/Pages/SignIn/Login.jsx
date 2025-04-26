@@ -2,6 +2,7 @@ import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { FcGoogle } from 'react-icons/fc'
 import useAuth from '../../hook/useAuth'
 import toast from 'react-hot-toast'
+import LoadingSpinner from '../../Components/LoadingSpinner'
 
 const Login = () => {
     const { signIn, signInWithGoogle, loading, user } = useAuth()
@@ -9,7 +10,7 @@ const Login = () => {
   const location = useLocation()
   const from = location?.state?.from?.pathname || '/'
   if (user) return <Navigate to={from} replace={true} />
-  if (loading) return <p>Loading....</p>
+  if (loading) return <LoadingSpinner/>
  // form submit handler
  const handleSubmit = async event => {
     event.preventDefault()
