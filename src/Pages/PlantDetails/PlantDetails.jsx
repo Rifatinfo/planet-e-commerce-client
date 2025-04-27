@@ -99,7 +99,7 @@ if (isLoading) return <LoadingSpinner />
           <div className='flex justify-between'>
             <p className='font-bold text-3xl text-gray-500'>Price: {price}$</p>
             <div>
-              <Button label={quantity > 0 ? 'Purchase' : 'Out Of Stock'} />
+              <Button onClick={() => setIsOpen(true)} label={quantity > 0 ? 'Purchase' : 'Out Of Stock'} />
             </div>
           </div>
           <hr className='my-6' />
