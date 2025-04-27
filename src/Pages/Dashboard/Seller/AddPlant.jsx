@@ -1,16 +1,13 @@
-// import { Helmet } from 'react-helmet-async'
 import AddPlantForm from '../../../components/Form/AddPlantForm'
-// import { imageUpload } from '../../../api/utils'
-// import useAuth from '../../../hooks/useAuth'
 import { useState } from 'react'
-// import useAxiosSecure from '../../../hooks/useAxiosSecure'
 import toast from 'react-hot-toast'
 import useAuth from '../../../hook/useAuth'
 import { imageUpload } from '../../../api/utils'
+import useAxiosSecure from '../../../hook/useAxiosSecure'
 
 const AddPlant = () => {
   const { user } = useAuth()
-//   const axiosSecure = useAxiosSecure()
+  const axiosSecure = useAxiosSecure()
   const [uploadImage, setUploadImage] = useState({
     image: { name: 'Upload Button' },
   })
@@ -51,8 +48,8 @@ const AddPlant = () => {
     // save plant in db
     try {
       // post req
-    //   await axiosSecure.post('/plants', plantData)
-      toast.success('Data Added Successfully!')
+      await axiosSecure.post('/plants', plantData)
+      toast.success('Data Added Successfully!');
     } catch (err) {
       console.log(err)
     } finally {

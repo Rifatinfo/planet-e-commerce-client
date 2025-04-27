@@ -1,9 +1,10 @@
+import Plant from "./Plant";
 
 const Home = () => {
 
     return (
-        <div>
-            
+        <div className="mt-20">
+            <Plant/>
         </div>
     );
 };

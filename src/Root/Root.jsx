@@ -5,7 +5,6 @@ const Root = () => {
     const location = useLocation();
 
     const isLogin = location.pathname.includes('sign-in') || location.pathname.includes('sign-up');
-    console.log(location);
     return (
         <div>
            {isLogin ||  <Navbar/>}
