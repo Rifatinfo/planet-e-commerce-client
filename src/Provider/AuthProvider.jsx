@@ -10,6 +10,7 @@ import {
   updateProfile,
 } from 'firebase/auth'
 import app from '../firebase/firebase.config'
+import axios from 'axios'
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext(null)
@@ -49,9 +50,16 @@ const AuthProvider = ({ children }) => {
 
   // onAuthStateChange
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, currentUser => {
-      setUser(currentUser)
+    const unsubscribe = onAuthStateChanged(auth, async currentUser => {
       console.log('CurrentUser-->', currentUser)
+      if (currentUser?.email) {
+        setUser(currentUser)
+        await axios.post(`http://localhost:5000/users/${currentUser.email}`, {
+          name: currentUser.displayName,
+          email: currentUser.email,
+          image: currentUser.photoURL,
+        })
+      }
       setLoading(false)
     })
     return () => {
