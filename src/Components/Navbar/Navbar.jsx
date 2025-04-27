@@ -24,7 +24,7 @@ const Navbar = () => {
                 <header className="max-w-7xl mx-auto bg-transparent  w-full flex justify-between items-center px-5 py-3 ">
                     {/* logo */}
                     <div>
-                        <img className="h-[40px] w-auto" src="https://plantnet-39615.web.app/assets/logo-flat-Phd-YyJA.png" alt="logo" />
+                        <Link to="/"><img className="h-[40px] w-auto" src="https://plantnet-39615.web.app/assets/logo-flat-Phd-YyJA.png" alt="logo" /></Link>
                         {/* <p className="md:text-3xl text-xl font-bold">Shopping</p> */}
                     </div>
 

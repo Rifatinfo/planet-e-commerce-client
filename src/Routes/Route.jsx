@@ -7,6 +7,8 @@ import SignUp from "../Pages/SignUp/SignUp";
 import Login from "../Pages/SignIn/Login";
 import DashboardLayout from "../Layout/DashboardLayout";
 import AddPlant from "../Pages/Dashboard/Seller/AddPlant";
+import PrivateRoute from "./PrivateRoute";
+import PlantDetails from "../Pages/PlantDetails/PlantDetails";
 
   const router = createBrowserRouter([
     {
@@ -16,6 +18,10 @@ import AddPlant from "../Pages/Dashboard/Seller/AddPlant";
         {
           path: "/",
           element: <Home/>,
+        },
+        {
+          path: '/plant/:id',
+          element: <PrivateRoute><PlantDetails /></PrivateRoute>,
         },
         {
           path: "/sign-up",
@@ -34,12 +40,13 @@ import AddPlant from "../Pages/Dashboard/Seller/AddPlant";
         {
           path: 'add-plant',
           element: (
-            <AddPlant />
+            <PrivateRoute>
+              <AddPlant />
+            </PrivateRoute>
           ),
         },
       ]
     },
-    
   ]);
 
   export default router;
