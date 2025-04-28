@@ -9,6 +9,7 @@ import DashboardLayout from "../Layout/DashboardLayout";
 import AddPlant from "../Pages/Dashboard/Seller/AddPlant";
 import PrivateRoute from "./PrivateRoute";
 import PlantDetails from "../Pages/PlantDetails/PlantDetails";
+import MyOrders from "../Pages/MyOrders/MyOrders";
 
   const router = createBrowserRouter([
     {
@@ -42,6 +43,14 @@ import PlantDetails from "../Pages/PlantDetails/PlantDetails";
           element: (
             <PrivateRoute>
               <AddPlant />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: 'my-orders',
+          element: (
+            <PrivateRoute>
+              <MyOrders />
             </PrivateRoute>
           ),
         },
