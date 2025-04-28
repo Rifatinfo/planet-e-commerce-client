@@ -11,7 +11,7 @@ import toast from 'react-hot-toast'
 import useAuth from '../../hook/useAuth'
 import useAxiosSecure from '../../hook/useAxiosSecure'
 
-const PurchaseModal = ({ closeModal, isOpen, plant }) => {
+const PurchaseModal = ({ closeModal, isOpen, plant, refetch }) => {
   const { name, category, quantity, price , _id, seller} = plant || {}
   const {user} = useAuth();
   const axiosSecure = useAxiosSecure( )
@@ -56,7 +56,10 @@ const PurchaseModal = ({ closeModal, isOpen, plant }) => {
   const handleParchase = async () =>{
         console.log(parchaseInfo);
     try{
-       await axiosSecure.post('/order', parchaseInfo)
+       await axiosSecure.post('/order', parchaseInfo);
+       // update quantity collection in decrise
+       await axiosSecure.patch(`/plants/quantity/${_id}`, {quantityUpdate : totalQuantity});
+       refetch();
     }
     catch (err){
       console.log(err.message); 

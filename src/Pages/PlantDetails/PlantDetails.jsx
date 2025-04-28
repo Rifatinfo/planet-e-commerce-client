@@ -104,7 +104,11 @@ if (isLoading) return <LoadingSpinner />
           </div>
           <hr className='my-6' />
 
-          <PurchaseModal plant={plant} closeModal={closeModal} isOpen={isOpen} />
+          <PurchaseModal 
+          refetch={refetch}
+          plant={plant} 
+          closeModal={closeModal} 
+          isOpen={isOpen} />
         </div>
       </div>
     </Container>
