@@ -1,11 +1,24 @@
+import { useQuery } from "@tanstack/react-query";
 import CustomerOrderDataRow from "../../Components/TablesRow/CustomerOrderDataRow"
+import useAuth from "../../hook/useAuth"
+import useAxiosSecure from "../../hook/useAxiosSecure";
+import LoadingSpinner from "../../Components/LoadingSpinner";
 
 const MyOrders = () => {
+    const {user} = useAuth();
+    const axiosSecure = useAxiosSecure();
+    const {data: orders = [], isLoading , refetch} = useQuery({
+        queryKey: ['orders', user?.email],
+        queryFn: async () =>{
+            const {data} = await  axiosSecure.get(`/customer-order/${user?.email}`)
+            return data;
+        }
+      })  
+    if (isLoading) return <LoadingSpinner />
+    console.log(orders);
+    
   return (
     <>
-      {/* <Helmet>
-        <title>My Orders</title>
-      </Helmet> */}
       <div className='container mx-auto px-4 sm:px-8'>
         <div className='py-8'>
           <div className='-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto'>
@@ -59,7 +72,12 @@ const MyOrders = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <CustomerOrderDataRow />
+                 {orders.map(orderData =>  
+                 <CustomerOrderDataRow 
+                 key={orderData._id} 
+                 orderData={orderData} 
+                 refetch={refetch}
+                 />)}
                 </tbody>
               </table>
             </div>

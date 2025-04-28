@@ -14,16 +14,15 @@ import LoadingSpinner from '../../Components/LoadingSpinner'
 
 const PlantDetails = () => {
   const {id} = useParams();
-  let [isOpen, setIsOpen] = useState(false)
-  // eslint-disable-next-line no-unused-vars
-  const {data: plant = [], isLoading , refetch} = useQuery({
+  let [isOpen, setIsOpen] = useState(false);
+  const { name, category, quantity, price, image, _id , description, seller} = plant || {}
+  const {data: plant = {}, isLoading , refetch} = useQuery({
     queryKey: ['plants', id],
     queryFn: async () =>{
         const {data} = await  axios.get(`http://localhost:5000/plant/${id}`)
         return data;
     }
   })  
-  const { name, category, quantity, price, image, _id , description, seller} = plant || {}
 if (isLoading) return <LoadingSpinner />
   const closeModal = () => {
     setIsOpen(false)
