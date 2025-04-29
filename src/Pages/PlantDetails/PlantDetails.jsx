@@ -15,7 +15,6 @@ import LoadingSpinner from '../../Components/LoadingSpinner'
 const PlantDetails = () => {
   const {id} = useParams();
   let [isOpen, setIsOpen] = useState(false);
-  const { name, category, quantity, price, image, _id , description, seller} = plant || {}
   const {data: plant = {}, isLoading , refetch} = useQuery({
     queryKey: ['plants', id],
     queryFn: async () =>{
@@ -23,6 +22,8 @@ const PlantDetails = () => {
         return data;
     }
   })  
+  const { name, category, quantity, price, image, _id , description, seller} = plant || {}
+
 if (isLoading) return <LoadingSpinner />
   const closeModal = () => {
     setIsOpen(false)
