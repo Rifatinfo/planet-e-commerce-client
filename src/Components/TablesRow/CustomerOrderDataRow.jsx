@@ -10,6 +10,11 @@ const CustomerOrderDataRow = ({orderData, refetch}) => {
   const handleDelete = async () =>{
     try{
       axiosSecure.delete(`/order/${_id}`);
+      await axiosSecure.patch(`/plants/quantity/${plantId}`, 
+        {
+          quantityUpdate : quantity,
+          status :'increase'
+        });
       refetch();
     }
     catch(err){
