@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { GrLogout } from 'react-icons/gr'
 import { FcSettings } from 'react-icons/fc'
 import { AiOutlineBars } from 'react-icons/ai'
-import { BsGraphUp } from 'react-icons/bs'
 
 
 import { Link } from 'react-router-dom'
@@ -12,10 +11,11 @@ import CustomerMenu from '../Menu/CustomerMenu'
 import SellerMenu from '../Menu/SellerMenu'
 import MenuItem from '../Menu/MenuItem'
 import AdminMenu from '../Menu/AdminMenu'
+import useRole from '../../../hook/useRole'
 const Sidebar = () => {
   const { logOut } = useAuth()
   const [isActive, setActive] = useState(false)
-
+  const [role] = useRole();
   // Sidebar Responsive Handler
   const handleToggle = () => {
     setActive(!isActive)
@@ -71,15 +71,10 @@ const Sidebar = () => {
           <div className='flex flex-col justify-between flex-1 mt-6'>
             <nav className=''>
               {/*  Menu Items */}
-              <CustomerMenu />
-              <SellerMenu />
-
-              <MenuItem
-                icon={BsGraphUp}
-                label='Statistics'
-                address='/dashboard'
-              />
-              <AdminMenu />
+               {/*  Menu Items */}
+               {role === 'customer' &&  <CustomerMenu />}
+              {role === 'seller' &&   <SellerMenu />}
+              {role === 'Admin' &&   <AdminMenu />}
             </nav>
           </div>
         </div>

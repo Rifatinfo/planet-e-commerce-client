@@ -10,6 +10,9 @@ import AddPlant from "../Pages/Dashboard/Seller/AddPlant";
 import PrivateRoute from "./PrivateRoute";
 import PlantDetails from "../Pages/PlantDetails/PlantDetails";
 import MyOrders from "../Pages/MyOrders/MyOrders";
+import ManageUsers from "../Pages/Dashboard/Seller/Admin/ManageUsers";
+import AdminRoute from "./AdminRoute";
+import SellerRoute from "./SellerRoute";
 
   const router = createBrowserRouter([
     {
@@ -42,7 +45,7 @@ import MyOrders from "../Pages/MyOrders/MyOrders";
           path: 'add-plant',
           element: (
             <PrivateRoute>
-              <AddPlant />
+              <SellerRoute><AddPlant /></SellerRoute>
             </PrivateRoute>
           ),
         },
@@ -51,6 +54,14 @@ import MyOrders from "../Pages/MyOrders/MyOrders";
           element: (
             <PrivateRoute>
               <MyOrders />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: 'manage-users',
+          element: (
+            <PrivateRoute>
+              <AdminRoute><ManageUsers /></AdminRoute>
             </PrivateRoute>
           ),
         },

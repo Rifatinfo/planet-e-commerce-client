@@ -6,6 +6,8 @@ import BecomeSellerModal from '../../Modal/BecomeSellerModal'
 import MenuItem from './MenuItem'
 import useAxiosSecure from '../../../hook/useAxiosSecure'
 import useAuth from '../../../hook/useAuth'
+// import useRole from '../../../hook/useRole'
+// import { Navigate } from 'react-router-dom'
 const CustomerMenu = () => {
   const [isOpen, setIsOpen] = useState(false)
   const axiosSecure = useAxiosSecure();
@@ -13,7 +15,7 @@ const CustomerMenu = () => {
   const closeModal = () => {
     setIsOpen(false)
   }
-
+  // const [role] = useRole()
   const handleRequest = async () =>{
      try{
       // send a request to server 
@@ -27,7 +29,7 @@ const CustomerMenu = () => {
       closeModal();
      }
   }
-
+//  if(role === 'customer') return <Navigate to="/dashboard/my-orders"></Navigate>
   return (
     <>
       <MenuItem icon={BsFingerprint} label='My Orders' address='my-orders' />
